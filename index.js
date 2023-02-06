@@ -38,7 +38,7 @@ app.post("/signup", async (req, res, next) => {
             return res.status(400).json({ error: "Invalid Captcha" });
         }
     } catch (e) {
-        return res.status(400).json({ error: "Captcha Error. Try again." });
+        return res.status(400).json({ error: e });
     }
 });
 
