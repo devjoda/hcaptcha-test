@@ -9,7 +9,8 @@ app.use(express.json())
 app.use(cors())
 
 app.post("/signup", async (req, res, next) => {
-    const token = req.body['h-captcha-response'];
+    // const token = req.body['h-captcha-response'];
+    const token = req.body.token;
     const secret = process.env.hcaptchaSecret;
     const verifyUrl = 'https://hcaptcha.com/siteverify';
     if (!token) {
