@@ -9,15 +9,28 @@ app.use(express.json())
 app.use(cors())
 
 app.post("/signup", async (req, res, next) => {
-    if (!req.body.token) {
+    const token = req.body['h-captcha-response'];
+    const secret = process.env.hcaptchaSecret;
+    const verifyUrl = 'https://hcaptcha.com/siteverify';
+    if (!token) {
         return res.status(400).json({ error: "Token is missing" });
     }
 
     try {
-        let { success } = await verify(
-            process.env.hcaptchaSecret,
-            req.body.token
-        );
+        const params = new URLSearchParams();
+        params.append('secret', secret);
+        params.append('response', token);
+
+        const response = await fetch(verifyUrl, {
+            method: 'POST',
+            body: params,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+        
+        const json = await response.json();
+        const { success } = json;
         if (success) {
             return res.json({ success: true });
         } else {
