@@ -31,8 +31,8 @@ app.post('/signup', async (req, res) => {
     },
   })
 
-  const json = await response.json()
-  const { success } = json
+  const data = await response.json()
+  const { success } = data
   if (success) {
     return res.json({ success: true })
   }
@@ -41,19 +41,13 @@ app.post('/signup', async (req, res) => {
 
 app.get('/generate', (req, res) => {
   const randomName = faker.name.findName()
-  console.log(randomName)
   const randomEmail = faker.internet.email()
   const randomPassword = faker.internet.password()
   const getRandomInt = max => Math.floor(Math.random() * max)
   const randomPlanet = ['Mars', 'Jupiter', 'Uranus'][getRandomInt(3)]
   return res.json({ randomName, randomEmail, randomPassword, randomPlanet })
 })
-
-app.get('/test', (req, res) => {
-    return res.json({"something": "oh noes!"})
-  })
   
-
 const PORT = process.env.PORT || 3001
 
 app.listen(PORT, () => {
