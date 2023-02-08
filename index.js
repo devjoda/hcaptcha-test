@@ -47,7 +47,7 @@ app.get('/generate', (req, res) => {
   const randomPlanet = ['Mars', 'Jupiter', 'Uranus'][getRandomInt(3)]
   return res.json({ randomName, randomEmail, randomPassword, randomPlanet })
 })
-  
+
 const PORT = process.env.PORT || 3001
 
 app.listen(PORT, () => {
